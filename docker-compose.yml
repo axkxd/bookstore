@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  bookstore:
+    build: .
+    image: bookstore:a1
+    container_name: bookstore
+    restart: on-failure
+    command: python manage.py runserver 0.0.0.0:8008
+    volumes:
+      - "./bookstore/:/bookstore/"
+    ports:
+      - 8008:8008
+    environment:
+      - DATABASE_URL=postgres://axkxd:bookpas@postgres:5432/bookstore
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: on-failure
+    environment:
+      - POSTGRES_DB=bookstore
+      - POSTGRES_USER=axkxd
+      - POSTGRES_PASSWORD=bookpas
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres_data:
