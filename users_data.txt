@@ -1,4 +1,0 @@
-superuser
-user_name: axkxd
-password: 12345
-email: axkxd@bookstore.com
