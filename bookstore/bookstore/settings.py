@@ -10,7 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+# Getting environment
+SECRET_KEY = os.environ['SECRET_KEY']
+DEBUG_VAR = os.environ.get('DEBUG', 'False')
+
+# Dgango-Postgres parameters
+DJANGO_POSTGRES_HOST = os.environ["DJANGO_POSTGRES_HOST"]
+DJANGO_POSTGRES_PORT = os.environ["DJANGO_POSTGRES_PORT"]
+DJANGO_POSTGRES_BASE = os.environ["DJANGO_POSTGRES_BASE"]
+DJANGO_POSTGRES_USER = os.environ["DJANGO_POSTGRES_USER"]
+DJANGO_POSTGRES_PASS = os.environ["DJANGO_POSTGRES_PASS"]
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +34,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o#b=xg^$2&u=-i4xd+bxw%h9+%z1lkn#g)i1o*en*__dcge@ew'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if DEBUG_VAR == 'True' or DEBUG_VAR == 'true':
+    DEBUG = True
+else:
+    DEBUG = False
+
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -86,11 +102,11 @@ WSGI_APPLICATION = 'bookstore.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "bookstore",
-        "USER": "axkxd",
-        "PASSWORD": "bookpas",
-        "HOST": "postgres",
-        "PORT": "5432",
+        "NAME": DJANGO_POSTGRES_BASE,
+        "USER": DJANGO_POSTGRES_USER,
+        "PASSWORD": DJANGO_POSTGRES_PASS,
+        "HOST": DJANGO_POSTGRES_HOST,
+        "PORT": DJANGO_POSTGRES_PORT,
     }
 }
 

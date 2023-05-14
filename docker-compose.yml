@@ -11,6 +11,8 @@ services:
       - "./bookstore/:/bookstore/"
     ports:
       - 8008:8008
+    env_file:
+      - env.container
     environment:
       - DATABASE_URL=postgres://axkxd:bookpas@postgres:5432/bookstore
     depends_on:
